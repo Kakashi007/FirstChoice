@@ -1,0 +1,68 @@
+type ItemList {
+  itemId: String!
+  qty :Int!
+}
+
+type Customer @model {
+  sub:String!
+  name:String!
+  email:String!
+  phone_number:String!
+  address:String!
+  pincode:String!
+  cart:[ItemList]
+  rewardPts: Int!
+  primeCust:Boolean!
+}
+
+type Driver @model {
+  sub:String!
+  name: String!
+  email: String!
+  delivery_pincode:String!
+  address:String!
+  phone_number:String!
+}
+
+type Order @model {
+  id: ID!
+  customerId: String!
+  driverId:  String
+  itemsOrdered: [ItemList]
+  orderStatus: String!
+  modeOfPayement: String
+  orderCode:String!
+  pickedUpTime:String!
+}
+
+type Item @model {
+  id: ID!
+  title:String!
+  category:String!
+  descriptionUrl:String!
+  ImageUrl:String!
+  quantity:Int!
+  rate:Int!
+}
+
+
+type ModelItemConnection {
+  items: [Item]
+  nextToken: String
+}
+
+type ModelOrderConnection {
+	items: [Order]
+	nextToken: String
+}
+type ModelCustomerConnection {
+	items: [Customer]
+	nextToken: String
+}
+
+type Query {
+  getOnCategory(category:String):ModelItemConnection
+  getOnTitle(title:String):ModelItemConnection
+  getOnCustomerId(customerId: String):ModelOrderConnection
+  getOnSub(sub: String): ModelCustomerConnection
+}
